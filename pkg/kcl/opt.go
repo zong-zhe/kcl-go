@@ -89,6 +89,23 @@ func WithCode(codes ...string) Option {
 	return *opt
 }
 
+// kcl -E aaa=/xx/xxx/aaa main.k
+func WithExternalPkgs(key_value_list ...string) Option {
+	var args []*gpyrpc.CmdExternalPkgSpec
+	for _, kv := range key_value_list {
+		if idx := strings.Index(kv, "="); idx > 0 {
+			name, value := kv[:idx], kv[idx+1:]
+			args = append(args, &gpyrpc.CmdExternalPkgSpec{
+				PkgName: name,
+				PkgPath: value,
+			})
+		}
+	}
+	var opt = newOption()
+	opt.ExternalPkgs = args
+	return *opt
+}
+
 // kcl -D aa=11 -D bb=22 main.k
 func WithOptions(key_value_list ...string) Option {
 	var args []*gpyrpc.CmdArgSpec
@@ -216,6 +233,9 @@ func (p *Option) merge(opts ...Option) *Option {
 		}
 		if opt.IncludeSchemaTypePath {
 			p.IncludeSchemaTypePath = opt.IncludeSchemaTypePath
+		}
+		if opt.ExternalPkgs != nil {
+			p.ExternalPkgs = append(p.ExternalPkgs, opt.ExternalPkgs...)
 		}
 	}
 	return p
