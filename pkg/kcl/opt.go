@@ -47,7 +47,7 @@ func ParseArgs(pathList []string, opts ...Option) (Option, error) {
 		}
 	}
 
-	args := newOption().merge(opts...).merge(tmpOptList...)
+	args := newOption().Merge(opts...).Merge(tmpOptList...)
 	if err := args.Err; err != nil {
 		return Option{}, err
 	}
