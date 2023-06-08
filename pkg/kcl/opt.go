@@ -165,20 +165,21 @@ func WithSettings(filename string) Option {
 	return *opt
 }
 
-// kcl -n
+// kcl -n --disable_none
 func WithDisableNone(disableNone bool) Option {
 	var opt = newOption()
 	opt.DisableNone = disableNone
 	return *opt
 }
 
+// kcl -k --sort_keys
 func WithSortKeys(sortKeys bool) Option {
 	var opt = newOption()
 	opt.SortKeys = sortKeys
 	return *opt
 }
 
-func (p *Option) merge(opts ...Option) *Option {
+func (p *Option) Merge(opts ...Option) *Option {
 	for _, opt := range opts {
 		if opt.ExecProgram_Args == nil {
 			continue
