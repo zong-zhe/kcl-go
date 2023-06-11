@@ -18,7 +18,7 @@ type Option struct {
 	Err error
 }
 
-func newOption() *Option {
+func NewOption() *Option {
 	return &Option{
 		ExecProgram_Args: new(gpyrpc.ExecProgram_Args),
 	}
@@ -47,7 +47,7 @@ func ParseArgs(pathList []string, opts ...Option) (Option, error) {
 		}
 	}
 
-	args := newOption().Merge(opts...).Merge(tmpOptList...)
+	args := NewOption().Merge(opts...).Merge(tmpOptList...)
 	if err := args.Err; err != nil {
 		return Option{}, err
 	}
@@ -72,19 +72,19 @@ func ParseArgs(pathList []string, opts ...Option) (Option, error) {
 }
 
 func WithWorkDir(s string) Option {
-	var opt = newOption()
+	var opt = NewOption()
 	opt.WorkDir = s
 	return *opt
 }
 
 func WithKFilenames(filenames ...string) Option {
-	var opt = newOption()
+	var opt = NewOption()
 	opt.KFilenameList = filenames
 	return *opt
 }
 
 func WithCode(codes ...string) Option {
-	var opt = newOption()
+	var opt = NewOption()
 	opt.KCodeList = codes
 	return *opt
 }
@@ -101,7 +101,7 @@ func WithExternalPkgs(key_value_list ...string) Option {
 			})
 		}
 	}
-	var opt = newOption()
+	var opt = NewOption()
 	opt.ExternalPkgs = args
 	return *opt
 }
@@ -118,7 +118,7 @@ func WithOptions(key_value_list ...string) Option {
 			})
 		}
 	}
-	var opt = newOption()
+	var opt = NewOption()
 	opt.Args = args
 	return *opt
 }
@@ -140,13 +140,13 @@ func WithOverrides(override_list ...string) Option {
 			})
 		}
 	}
-	var opt = newOption()
+	var opt = NewOption()
 	opt.Overrides = overrides
 	return *opt
 }
 
 func WithPrintOverridesAST(printOverrideAst bool) Option {
-	var opt = newOption()
+	var opt = NewOption()
 	opt.PrintOverrideAst = printOverrideAst
 	return *opt
 }
@@ -160,21 +160,21 @@ func WithSettings(filename string) Option {
 	if err != nil {
 		return Option{Err: fmt.Errorf("kcl.WithSettings(%q): %v", filename, err)}
 	}
-	var opt = newOption()
+	var opt = NewOption()
 	opt.ExecProgram_Args = f.To_ExecProgram_Args()
 	return *opt
 }
 
 // kcl -n --disable_none
 func WithDisableNone(disableNone bool) Option {
-	var opt = newOption()
+	var opt = NewOption()
 	opt.DisableNone = disableNone
 	return *opt
 }
 
 // kcl -k --sort_keys
 func WithSortKeys(sortKeys bool) Option {
-	var opt = newOption()
+	var opt = NewOption()
 	opt.SortKeys = sortKeys
 	return *opt
 }
