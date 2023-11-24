@@ -199,6 +199,31 @@ func GetSchemaType(file, code, schemaName string) ([]*gpyrpc.KclType, error) {
 	return resp.SchemaTypeList, nil
 }
 
+func GetFullSchemaType(pathList []string, schemaName string, opts ...Option) ([]*gpyrpc.KclType, error) {
+	combinedOpts := NewOption()
+	for _, path := range pathList {
+		combinedOpts.Merge(WithKFilenames(path))
+	}
+	combinedOpts.Merge(opts...)
+
+	args, err := ParseArgs(pathList, *combinedOpts)
+	if err != nil {
+		return nil, err
+	}
+
+	client := service.NewKclvmServiceClient()
+	resp, err := client.GetFullSchemaType(&gpyrpc.GetFullSchemaType_Args{
+		ExecArgs:   args.ExecProgram_Args,
+		SchemaName: schemaName,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.SchemaTypeList, nil
+}
+
 func GetSchemaTypeMapping(file, code, schemaName string) (map[string]*gpyrpc.KclType, error) {
 	client := service.NewKclvmServiceClient()
 	resp, err := client.GetSchemaTypeMapping(&gpyrpc.GetSchemaTypeMapping_Args{
