@@ -24,6 +24,8 @@ require (
 	kcl-lang.io/kpm v0.4.1
 )
 
+replace kcl-lang.io/kpm => /Users/zongz/Workspace/kusionstack/kpm
+
 require (
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230106234847-43070de90fa1 // indirect
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect

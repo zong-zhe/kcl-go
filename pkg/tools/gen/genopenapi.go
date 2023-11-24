@@ -3,6 +3,7 @@ package gen
 import (
 	"fmt"
 	htmlTmpl "html/template"
+
 	kpm "kcl-lang.io/kpm/pkg/api"
 
 	"os"
@@ -37,7 +38,7 @@ func KclPackageToSwaggerV2Spec(pkgPath string) (*SwaggerV2Spec, error) {
 			Version: pkg.GetVersion(),
 		},
 	}
-	pkgMapping, err := pkg.GetAllSchemaTypeMapping()
+	pkgMapping, err := pkg.GetAllFullSchemaTypeMapping()
 	if err != nil {
 		return spec, err
 	}
