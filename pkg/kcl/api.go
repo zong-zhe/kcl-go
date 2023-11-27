@@ -205,6 +205,10 @@ func GetFullSchemaType(pathList []string, schemaName string, opts ...Option) ([]
 		return nil, err
 	}
 
+	for _, kpath := range pathList {
+		args.Merge(WithKFilenames(kpath))
+	}
+
 	client := service.NewKclvmServiceClient()
 	resp, err := client.GetFullSchemaType(&gpyrpc.GetFullSchemaType_Args{
 		ExecArgs:   args.ExecProgram_Args,
