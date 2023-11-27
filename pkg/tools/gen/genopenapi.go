@@ -38,7 +38,7 @@ func KclPackageToSwaggerV2Spec(pkgPath string) (*SwaggerV2Spec, error) {
 			Version: pkg.GetVersion(),
 		},
 	}
-	pkgMapping, err := pkg.GetAllFullSchemaTypeMapping()
+	pkgMapping, err := pkg.GetAllSchemaTypeMapping()
 	if err != nil {
 		return spec, err
 	}
